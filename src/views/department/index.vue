@@ -20,12 +20,11 @@
       </b-table>
     </div>
     <inform />
-    InputMode: {{ inputMode }}
   </div>
 </template>
 
 <script>
-import inform from './imform.vue'
+import inform from './inform.vue'
 
 export default {
   components: {

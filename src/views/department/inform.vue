@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modal-user-inform" :title="getTitle" @ok="onSubmit" @cancel="onCancel">
+    <b-modal id="modal-department-inform" title="부서 관리" @ok="onSubmit" @cancel="onCancel">
       <div>
         <b-form-group v-if="inputMode == 'update'" label="id" label-for="id" label-cols="5">
           <b-form-input id="id" v-model="department.id" disabled> </b-form-input>
@@ -23,7 +23,38 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      department: {
+        id: null,
+        name: null,
+        code: null,
+        description: null,
+        createdAt: null
+      }
+    }
+  },
+  computed: {
+    infoData() {
+      return this.$store.getters.Department
+    },
+    inputMode() {
+      return this.$store.getters.DepartmentInputMode
+    },
+    getCreatedAt() {
+      return this.department.createdAt
+    }
+  },
+  methods: {
+    onSubmit() {
+      console.log('submit', this.user)
+    },
+    onCancel() {
+      console.log('cancel')
+    }
+  }
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>
