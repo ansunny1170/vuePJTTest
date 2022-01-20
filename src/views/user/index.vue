@@ -53,6 +53,74 @@ export default {
     },
     inputMode() {
       return this.$store.getters.UserInputMode
+    },
+    insertedResult() {
+      return this.$store.getters.UserInsertedResult
+    },
+    updatedResult() {
+      return this.$store.getters.UserUpdatedResult
+    },
+    deletedResult() {
+      return this.$store.getters.UserDeletedResult
+    }
+  },
+  watch: {
+    insertedResult(value) {
+      console.log('.user/index.vue insertedResult value', value)
+      if (value !== null) {
+        if (value > 0) {
+          this.$bvToast.toast('신규 등록 되었습니다.', {
+            tile: 'SUCCESS',
+            variant: 'success',
+            solid: true
+          })
+          this.searchDepartmentList()
+        } else {
+          this.$bvToast.toast('신규 등록 실패하였습니다.', {
+            title: 'ERROR',
+            variant: 'danger',
+            solid: true
+          })
+        }
+      }
+    },
+    updatedResult(value) {
+      console.log('.user/index.vue updatedResult value', value)
+      if (value !== null) {
+        if (value > 0) {
+          this.$bvToast.toast('수정 등록 되었습니다.', {
+            tile: 'SUCCESS',
+            variant: 'success',
+            solid: true
+          })
+          this.searchDepartmentList()
+        } else {
+          this.$bvToast.toast('수정 등록 실패하였습니다.', {
+            title: 'ERROR',
+            variant: 'danger',
+            solid: true
+          })
+        }
+      }
+    },
+    deletedResult(value) {
+      console.log('.user/index.vue deletedResult value', value)
+      if (value !== null) {
+        if (value > 0) {
+          this.$bvToast.toast('삭제 되었습니다.', {
+            tile: 'SUCCESS',
+            variant: 'success',
+            solid: true
+          })
+          this.searchDepartmentList()
+        } else {
+          this.$bvToast.toast('삭제 실패하였습니다.', {
+            title: 'ERROR',
+            variant: 'danger',
+            solid: true
+          })
+        }
+      }
     }
   },
   created() {
@@ -67,14 +135,15 @@ export default {
       this.$store.dispatch('actUserInputMode', 'insert')
       this.$bvModal.show('modal-user-inform')
     },
-    onClickEdit() {
+    onClickEdit(id) {
       this.$store.dispatch('actUserInputMode', 'update')
+      this.$store.dispatch('actUserInfo', id)
       this.$bvModal.show('modal-user-inform')
     },
     onClickDelete(id) {
       this.$bvModal.msgBoxConfirm('정말 삭제 하시겠습니까?').then(value => {
         if (value) {
-          this.$store.dispatch('', id)
+          this.$store.dispatch('actUserDeletedResult', id)
         }
       })
     }

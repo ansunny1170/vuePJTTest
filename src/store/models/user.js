@@ -3,6 +3,7 @@ import api from '../apiUtil'
 const stateInit = {
   User: {
     id: null,
+    departmentId: null,
     name: null,
     userId: null,
     password: null,
@@ -19,12 +20,18 @@ export default {
   state: {
     UserList: [],
     User: { ...stateInit.User },
-    UserInputMode: null
+    UserInputMode: null,
+    UserInsertedResult: null,
+    UserUpdatedResult: null,
+    UserDeletedResult: null
   },
   getters: {
     UserList: state => state.UserList,
     User: state => state.User,
-    UserInputMode: state => state.UserInputMode
+    UserInputMode: state => state.UserInputMode,
+    UserInsertedResult: state => state.UserInsertedResult,
+    UserUpdatedResult: state => state.UserUpdatedResult,
+    UserDeletedResult: state => state.UserDeletedResult
   },
   mutations: {
     setUserList(state, data) {
@@ -35,13 +42,18 @@ export default {
     },
     setUserInputMode(state, data) {
       state.UserInputMode = data
+    },
+    setUserInsertedResult(state, data) {
+      state.UserInsertedResult = data
+    },
+    setUserUpdatedResult(state, data) {
+      state.UserUpdatedResult = data
+    },
+    setUserDeletedResult(state, data) {
+      state.UserDeletedResult = data
     }
   },
   actions: {
-    actUserInit(context, payload) {
-      console.log('actUserInit')
-      context.commit('setUser', { ...stateInit.User })
-    },
     actUserList(context, payload) {
       const userList = [
         {
@@ -65,27 +77,34 @@ export default {
       ]
       context.commit('setUserList', userList)
     },
+    actUserInit(context, payload) {
+      context.commit('setUser', { ...stateInit.User })
+    },
+    actUserInputMode(context, payload) {
+      console.log('actUserInputMode')
+      context.commit('setUserInputMode', payload)
+    },
     actUserInfo(context, payload) {
-      console.log('actUserInfo')
-      // context.commit('setUser', { ...stateInit.User })
+      console.log('actUserInfo', payload)
+      context.commit('setUser', { ...stateInit.User })
 
       setTimeout(() => {
         const userList = [
           {
             id: 1,
+            departmentId: '1',
             name: '김예찬',
-            department: '본딩기술팀',
             userId: 'kyc',
-            role: '팀장',
+            role: 'leader',
             email: 'cjs@email.com',
             createdAt: '2022-01-19'
           },
           {
             id: 2,
+            departmentId: '1',
             name: '임예찬',
-            department: '본딩기술팀',
             userId: 'lyc',
-            role: '팀원',
+            role: 'member',
             email: 'tk@email.com',
             createdAt: '2022-01-20'
           }
@@ -99,9 +118,26 @@ export default {
         context.commit('setUser', user)
       }, 300)
     },
-    actUserInputMode(context, payload) {
-      console.log('actUserInputMode')
-      context.commit('setUserInputMode', payload)
+    actUserInsertedResult(context, payload) {
+      context.commit('setUserInsertedResult', null)
+      setTimeout(() => {
+        const UserInsertedResult = 1
+        context.commit('setUserInsertedResult', UserInsertedResult)
+      }, 300)
+    },
+    actUserUpdatedResult(context, payload) {
+      context.commit('setUserUpdatedResult', null)
+      setTimeout(() => {
+        const UserUpdatedResult = 1
+        context.commit('setUserUpdatedResult', UserUpdatedResult)
+      }, 300)
+    },
+    actUserDeletedResult(context, payload) {
+      context.commit('setUserDeletedResult', null)
+      setTimeout(() => {
+        const UserDeletedResult = 1
+        context.commit('setUserDeletedResult', UserDeletedResult)
+      }, 300)
     }
   }
 }
